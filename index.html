@@ -1,0 +1,1183 @@
+<meta charset = "utf-8">
+<html>
+<head>
+<link href='https://fonts.googleapis.com/css?family=Cinzel' rel='stylesheet'>
+<style>
+html, body {
+	margin:0;
+}
+#map{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    z-index: 0;
+}
+
+#zimowe{
+    position: absolute;
+    z-index: 1;
+    left: 10px;
+	top:100px;
+	border:1px solid black;
+	border-radius:20px;
+	padding:3.5px;
+	box-shadow:2px -2px 6px #777;
+}
+#zimowe_button:focus {
+    outline: 0 !important;
+}
+#zimowe:hover {
+	border:2px dashed black;
+	padding:3px;
+}
+#zimowe .info2 {
+  visibility: hidden;
+  width: 180px;
+  background-color: #ffdd99;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+  top: 20%;
+  left: 250%;
+  margin-left: -60px;
+  font-size:18px;
+  border:1px solid black;
+  font-weight:bold;
+}
+#zimowe:hover .info2 {
+  visibility: visible;
+  opacity: 1;
+}
+#zimowe .info2::after {
+  content: " ";
+  position: absolute;
+  top:50%;  
+  right:100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+
+#letnie{
+    position: absolute;
+    z-index: 1;
+    left:10px;
+	top:160px;
+	border:1px solid black;
+	border-radius:20px;
+	padding:3.5px;
+	box-shadow:2px -2px 6px #777;
+}
+#letnie_button:focus {
+    outline: 0 !important;
+}
+#letnie:hover {
+	border:2px dashed black;
+	padding:3px;
+}
+#letnie .info2 {
+  visibility: hidden;
+  width: 160px;
+  background-color: #ffdd99;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+  top: 20%;
+  left: 250%;
+  margin-left: -60px;
+  font-size:18px;
+  border:1px solid black;
+  font-weight:bold;
+}
+#letnie:hover .info2 {
+  visibility: visible;
+  opacity: 1;
+}
+#letnie .info2::after {
+  content: " ";
+  position: absolute;
+  top:50%;  
+  right:100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+#olimpijskie{
+    position: absolute;
+    z-index: 1;
+    left:10px;
+	top:220px;
+	border:1px solid black;
+	border-radius:20px;
+	padding:3.5px;
+	box-shadow:2px -2px 6px #777;
+}
+#olimpijskie_button:focus {
+	outline:none;
+}
+#olimpijskie:hover {
+	border:2px dashed black;
+	padding:3px;
+}
+#olimpijskie .info2 {
+  visibility: hidden;
+  width: 200px;
+  background-color: #ffdd99;
+  color: black;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity 1s;
+  top:20%;
+  left: 250%;
+  margin-left: -60px;
+  font-size:18px;
+  border:1px solid black;
+  font-weight:bold;
+}
+#olimpijskie:hover .info2 {
+  visibility: visible;
+  opacity: 1;
+}
+#olimpijskie .info2::after {
+  content: " ";
+  position: absolute;
+  top:50%;  
+  right:100%;
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent black transparent transparent;
+}
+.leaflet-marker-icon {
+	background:#dd6c69;
+	border:5px solid rgba(255,255,255,0.5);
+	text-align:center;
+	border-radius:35%;
+	box-shadow:3px 1px 4px;
+	padding:2px;
+}
+.leaflet-marker-icon:hover {
+	border:5px solid #660000;
+	transform:scale(1.2);
+}
+.selected-icon.selected {
+	border:2px solid black!important;
+	border-radius:20px;
+	background-color:#e6ccb3;
+}
+.leaflet-popup-tip{
+	border:2px solid #777;
+}
+.leaflet-popup {
+	border-radius:12px;
+	border:2px solid #777;
+}
+.leaflet-popup-content-wrapper {
+	background-color:white !important
+}
+a.leaflet-popup-close-button {
+	color:#999!important;
+}
+#zlote em{
+    color: #FFD700;
+    font-style: normal;
+	
+}
+
+#srebrne em{
+    color: #A9A9A9;
+    font-style: normal;
+}
+
+#brazowe em{
+    color: #8B4513;
+    font-style: normal;
+}
+#block{
+	background-color:#ffdd99;
+	border: 1.5px dashed black; 
+	width:810px;
+	height:480px;
+	text-align:center;
+	border-radius:25px;
+	overflow:auto;
+	display:none;
+	z-index:1;
+	top:80px;
+	position: fixed;
+        left: 50%;
+        -webkit-transform: translate(-50%, 0);
+        transform: translate(-50%, 0);
+	position:absolute;
+	-webkit-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	-moz-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	transition: opacity 1s;
+}
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width:220px;
+  margin:auto;
+  border-radius:40px;
+}
+
+td  {
+  border: 2px solid #ababcd;
+  text-align: center;
+  padding: 5px;
+}
+
+tr:nth-child(even) {
+  background-color: #eeeeee;
+}
+table td#table02 {
+	background-color:#d4af37;
+}
+table td#table03 {
+	background-color:#c4cace;
+}
+table td#table04 {
+	background-color:#cc5200;
+}
+table td#table05 {
+	background-color:#ffdd99;
+}
+table td#table06 {
+	background-color:#ffdd99;
+}
+table td#table07 {
+	background-color:#ffdd99;
+}
+
+#spodek {
+	width:230px;
+	margin:auto;
+	display:none;
+	z-index:1;
+	left:500px;
+	position:absolute;
+	top:580px;
+	background-color:#cccccc;
+	border-radius:20px;
+	border:1.5px dotted black;
+	height:120px;
+	-webkit-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	-moz-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	padding:0px;
+}
+
+#close-button {
+	background-color:#dddddd;
+	border:none;
+	border-radius:10px;
+	outline:none;
+}
+#button {
+	text-align:right;
+	padding:5px;
+	width:40px;
+	height:40px;
+	float:right;
+}
+#close-button:hover {
+	background-color:#aaa;
+	cursor:pointer;
+}
+#back-button {
+	border:none;
+	float:left;
+	padding-left:15px;
+	padding-top:15px;
+	background-color: transparent;
+	background-repeat:no-repeat;
+    cursor:pointer;
+	outline:none;	
+	letter-spacing:1px;
+}
+#back-button:hover {
+	 font-weight:bold;
+}
+.sportman {
+	width:160;
+	height:195px;
+	padding:20px;
+	background-color:#ffdd99;
+	margin:auto;
+}
+.sportman:hover {
+	background-color:#eecc88;
+	cursor:pointer;
+}
+.photo {
+	width:150px;
+	height:150px;
+	padding:5px;
+	text-align:center;
+}
+.text {
+	width:150px;
+	height:30px;
+	margin:auto;
+	padding-top:5px;
+	font-size:120%;
+	text-shadow:1px 1px #222;
+	-webkit-text-stroke: 0.5px black; 
+	color: #eee;
+	font-family:Arial;
+}
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, #669999),
+									   color-stop(0.72, #85adad),
+									   color-stop(0.86, #a3c2c2));
+}
+.image {
+	object-fit: cover;
+	border-radius:75%;
+	border:0.5px solid #ccc;
+      box-shadow: 8px 8px 3px rgba(80, 80, 80, 0.5);
+      -moz-box-shadow: 8px 8px 3px rgba(80, 80, 80, 0.5);
+      -webkit-box-shadow: 8px 8px 3px rgba(80, 80, 80, 0.5);
+      -khtml-box-shadow: 8px 8px 3px rgba(80, 80, 80, 0.5);
+}
+.image:hover {
+	transform:scale(1.05);
+	opacity:0.9;
+}
+#sportman1 {
+	background-color:#ffdd99;
+	border: 1.5px dashed black; 
+	width:450px;
+	height:640px;
+	border-radius:25px;
+	overflow:auto;
+	display:none;
+	z-index:1;
+	position:absolute;
+	top:40px;
+	left:530px;
+}
+#tekst {
+	padding:20px;
+	text-align:justify;
+	width:410px;
+	height:258px;
+	text-align:center;
+	
+}
+
+#photo {
+	padding-top:40px;
+	text-align:center;
+	padding-left:50px;
+}
+#info {
+	z-index:1;
+	position:absolute;
+	top:0;
+	width:100%;
+	background: linear-gradient(to top, #ffffff 0%, #ffffcc 100%);
+	font-size:14px;
+	text-align:center;
+	font-family:"Cinzel";
+	border-top-width: 2px;
+	border-top-style: solid;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	margin-top: -8px;
+}
+.leaflet-control-zoom {
+	top:80px;
+}
+
+#flaga{
+	border: none;
+	margin-top: -20px;
+	margin-bottom:-10px;
+}
+
+#flaga td{
+	padding: 0px;
+	border: none;
+}
+
+#flag{
+	width:25px;
+	height:25px;
+	padding-left:25px !important;
+}
+
+#spodek2{
+	width:230px;
+	margin:auto;
+	display:none;
+	z-index:1;
+	position:absolute;
+	top:580px;
+	background-color:#cccccc;
+	border-radius:20px;
+	border:1.5px dotted black;
+	height:120px;
+	-webkit-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	-moz-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+}
+
+#spodek3{
+	width:230px;
+	margin:auto;
+	display:none;
+	z-index:1;
+	position:absolute;
+	top:580px;
+	background-color:#cccccc;
+	border-radius:20px;
+	border:1.5px dotted black;
+	height:120px;
+	-webkit-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	-moz-box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+	box-shadow: 21px 25px 31px -3px rgba(135,135,135,0.9);
+}
+
+
+#napis {
+	padding-top:25px !important;
+	height:30px;
+	padding-right:15px !important;
+	margin-bottom:-10px;
+}
+#ice_div_desc {
+	text-shadow: 2px 2px 2px #888888;
+	margin-top:-20px;
+	margin-bottom:-20px;
+}
+#div_desc {
+	text-shadow: 2px 2px 2px #888888;
+	margin-top:-20px;
+	margin-bottom:-20px;
+	color:#ccc;
+	-webkit-text-stroke: 1px black; 
+	color: #ccc;
+	font-family:Arial;
+}
+#rok {
+	text-align:center;
+}
+.ice_icon {
+	background-color:#437199!important;
+	border:5px solid rgba(255,255,255,0.5);
+	text-align:center;
+	border-radius:35%;
+	box-shadow:3px 1px 4px;
+	padding:2px;
+}
+.ice_icon:hover {
+	border:5px solid #04303e;
+	transform:scale(1.2);
+}
+#case2 {
+	text-shadow: 2px 2px 2px #888888;
+	color:#ccc;
+	-webkit-text-stroke: 1px black; 
+	color: #ccc;
+	font-family:Arial;
+	font-size:32px;
+}
+#case3 {
+	text-shadow: 2px 2px 2px #888888;
+	color:#ccc;
+	-webkit-text-stroke: 1px black; 
+	color: #ccc;
+	font-family:Arial;
+	font-size:32px;
+}
+
+#records_table, #records_table2, #records_table3 {
+	width: 500px;
+}
+
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+  integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+  crossorigin=""/>
+<script
+	src="https://code.jquery.com/jquery-3.4.1.js"
+	integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-ajax/2.1.0/leaflet.ajax.js"></script>
+</head>
+<body>
+<div id = "info">
+	<h1>Polscy Medaliści na Igrzyskach Olimpijskich</h1>
+</div>
+<div id="zimowe" class = "selected-icon">
+<span class="info2">Igrzyska Zimowe</span>
+<input type="image" src="https://dl.dropboxusercontent.com/s/faxf5kw9dk3z1qq/ski.png" name="zimowe_button" class="btTxt_submit" id="zimowe_button" width=50 height=50/>
+</div>
+<div id="letnie" class = "selected-icon">
+  <span class="info2">Igrzyska Letnie</span>
+  <input type="image" src="https://dl.dropboxusercontent.com/s/15u2ow9yuw90ojb/sports-and-competition.png?dl=0" name="letnie_button" class="btTxt_submit" id="letnie_button" width=50 height=50/>
+  </div>
+<div id="olimpijskie" class = "selected-icon">
+<span class="info2">Igrzyska Olimpijskie</span>
+  <input type="image" src="https://dl.dropboxusercontent.com/s/wiab2oic20idd5c/olympic.png?dl=0" name="olimpijskie_button" class="btTxt_submit" id="olimpijskie_button" width=50 height=50/>
+</div>
+
+<!--<div onClick="OpenPopup('layer');">Open Popup</div>-->
+<div id = "map"></div>
+
+	<div id = "block"><div id = "button">
+	<input id = "close-button" type="button" value="x" onclick="document.getElementById('block').style.display='none';document.getElementById('spodek').style.display='none';document.getElementById('spodek2').style.display='none';document.getElementById('spodek3').style.display='none';"></div>
+	
+	<h1><p id = "div_desc"><span style="text-shadow: 3px 3px 2px #888888"/></p></h1>
+	<!--
+	<table id="records_table" border='1'>
+		<tr>
+			<th>Zawodnik</th>
+			<th>Rok</th>
+			<th>Medal</th>
+		</tr>
+	</table>
+-->
+	<!--
+		<div class = "sportman" onclick="document.getElementById('sportman1').style.display='block';document.getElementById('block').style.display='none';document.getElementById('spodek').style.display='none'" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/03_Bronislaw_Malinowski.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">PUDZIAN</span>
+				
+			</div>
+		</div>
+		<div class = "sportman" onclick="document.getElementById('sportman1').style.display='block';document.getElementById('block').style.display='none';document.getElementById('spodek').style.display='none'" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/12_Dluzewska_i_Koscianska.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Pudzianowski</span>
+			</div>
+		</div>
+		<div class = "sportman" onclick="document.getElementById('sportman1').style.display='block';document.getElementById('block').style.display='none';document.getElementById('spodek').style.display='none'"style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/16_Jan_Dolgowicz.jpg" width = "150px" height = "150px" ></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Pudzian</span>
+			</div>
+		</div>
+		<div class = "sportman" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/01_Jan_Kowalczyk.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Mariusz Pudzianowski</span>
+			</div>
+		</div>
+		<div class = "sportman" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/25_Tadeusz_Dembonczyk.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Robercik</span>
+			</div>
+		</div>
+		<div class = "sportman" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/21_Jerzy_Rybicki.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Małysz</span>
+			</div>
+		</div>
+		<div class = "sportman" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/30_Wioslarze.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Robercik</span>
+			</div>
+		</div>
+		<div class = "sportman" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/16_Jan_Dolgowicz.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Robercik</span>
+			</div>
+		</div>
+		<div class = "sportman" style = "float:left">
+			<div class = "photo">
+			<img class = "image" src = "zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/11_szpada_druzynowa.jpg" width = "150px" height = "150px"></img>
+			</div>
+			<div class = "text">
+				<span style = "font-weight:bold">Robercik</span>
+			</div>
+		</div>
+	
+	
+	
+	
+	-->
+	</div> 
+		<div id = "spodek"> 
+			<table id="flaga">
+				<tr>
+				<td id="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/1280px-Flag_of_Poland.svg.png" width = "25" height = "15"></td>
+				<td id="napis"><p id="desc" >Polacy w 1980 roku</p></td>
+				</tr>
+			</table>
+			<table>
+			<tr id = "table0">
+				<td id = "table02">Złoto</td>
+				<td id = "table03">Srebro</td>
+				<td id = "table04">Brąz</td>
+			  </tr>
+			  <tr id = "table00">
+				<td id = "gold">2</td>
+				<td id = "silver">5</td>
+				<td id = "bronze">9</td>
+			  </tr>
+			</table>
+		</div>
+		<div id = "spodek2"> 
+			<table id="flaga">
+				<tr>
+				<td id="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/1280px-Flag_of_Poland.svg.png" width = "25" height = "15"></td>
+				<td id="napis"><p id="desc2" >Polacy w 1980 roku</p></td>
+				</tr>
+		</table>
+			<table>
+			<tr id = "table0">
+				<td id = "table02">Złoto</td>
+				<td id = "table03">Srebro</td>
+				<td id = "table04">Brąz</td>
+			  </tr>
+			  <tr id = "table00">
+				<td id = "gold2">2</td>
+				<td id = "silver2">5</td>
+				<td id = "bronze2">9</td>
+			  </tr>
+			</table>
+		</div>
+		<div id = "spodek3"> 
+			<table id="flaga">
+				<tr>
+				<td id="flag"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Flag_of_Poland.svg/1280px-Flag_of_Poland.svg.png" width = "25" height = "15"></td>
+				<td id="napis"><p id="desc3" >Polacy w 1980 roku</p></td>
+				</tr>
+		</table>
+			<table>
+			<tr id = "table0">
+				<td id = "table02">Złoto</td>
+				<td id = "table03">Srebro</td>
+				<td id = "table04">Brąz</td>
+			  </tr>
+			  <tr id = "table00">
+				<td id = "gold3">2</td>
+				<td id = "silver3">5</td>
+				<td id = "bronze3">9</td>
+			  </tr>
+			</table>
+		</div>
+</div>
+<div id = "sportman1"> 
+		<div id = "button">
+		<input id = "close-button" type="button" value="x" onclick="document.getElementById('sportman1').style.display='none'"></div>
+	<input id = "back-button" type="button" value="↩ wróć" onclick="document.getElementById('sportman1').style.display='none';document.getElementById('block').style.display='block';document.getElementById('spodek').style.display='block'"> 
+		<div id = "photo">
+			<img src ="zdjecia_medalistow/IGRZYSKA_LETNIE/1980-MOSKWA/03_Bronislaw_Malinowski.jpg">
+		</div>
+		
+		<div id = "tekst">
+			<h1>Tadeusz Ślusarski</h1>
+			<span style = "font-weight:bold">Dyscyplina:</span> lekkoatletyka bieg</br></br>
+			<span style = "font-weight:bold">Data:</span> 19 października</br></br>
+			<span style = "font-weight:bold">Wynik:</span> 23.1 s</br></br>
+			<span style = "font-weight:bold">Dyscyplina:</span> 1964</br></br>
+			<span style = "font-weight:bold">Medal:</span> srebrny</br>
+		</div>
+
+
+<script>
+
+var map = L.map( 'map', {
+    center: [20, 0],
+    minZoom: 2,
+    zoom: 2.60,
+	zoomSnap:0.1
+});
+
+L.tileLayer( 'https://api.mapbox.com/styles/v1/adryanque/ckd99v6j000ke1jmwyr4u4pfi/tiles/512/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiYWRyeWFucXVlIiwiYSI6ImNrZDliYXBidjA2YzYzM3J4em02aHZlN2oifQ.ZzMhhePg7yuqu2nhm5jXww', {
+    attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>"
+}).addTo( map );
+
+var zimowe_ikona = L.icon({
+    iconUrl: 'https://dl.dropboxusercontent.com/s/faxf5kw9dk3z1qq/ski.png',
+    iconSize:     [35, 35], // size of the icon
+    iconAnchor:   [25, 15], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -25], // point from which the popup should open relative to the iconAnchor
+    className:"ice_icon",
+});
+
+var letnie_ikona = L.icon({
+    iconUrl: 'https://dl.dropboxusercontent.com/s/15u2ow9yuw90ojb/sports-and-competition.png?dl=0',
+    iconSize:     [35, 35], // size of the icon
+    iconAnchor:   [25, 15], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -25] // point from which the popup should open relative to the iconAnchor
+});
+
+var odnosnik = "odnosnik"
+
+var zimowe = new L.GeoJSON.AJAX("https://api.jsonbin.io/b/5ec2425f18c8475bf16b736d",{onEachFeature:function (feature,layer) {
+if (feature.properties.rok_2 == null){
+layer.bindPopup('<h2>'
++feature.properties.nazwa+' <img src="'+feature.properties.odnosnik+'" height=20px width=35px style="border:1.6px solid black; vertical-align: text-bottom;"></h2><h3>Rok: '+feature.properties.rok+'</h3><h3 id="zlote"><em>Złote: </em>'+feature.properties.zlote+'</h3><h3 id="srebrne"><em>Srebrne: </em>'
++feature.properties.srebrne+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.brazowe+'</h3>')
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+layer.on('click',function(e){
+    window.rok = feature.properties.rok;
+    window.zloto = feature.properties.zlote;
+    window.srebro = feature.properties.srebrne;
+    window.braz = feature.properties.brazowe;
+    document.getElementById("desc").innerHTML = '<h4>Polacy w '+window.rok+' roku</h4>';
+    document.getElementById("div_desc").innerHTML = '<h4>Igrzyska olimpijskie w '+window.rok+' roku</h4>';
+    document.getElementById("gold").innerHTML = window.zloto;
+    document.getElementById("silver").innerHTML = window.srebro;
+    document.getElementById("bronze").innerHTML = window.braz;
+    document.getElementById('spodek2').style.display='none';
+    document.getElementById('spodek').style.left = '42.5%';
+    $('#records_table').remove();
+    $('#records_table2').remove();
+    $('#records_table3').remove();
+    $('#case2').remove();
+    $('#case3').remove();
+    var html = "<table id='records_table' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html);
+    $.ajax({
+        url: "https://api.jsonbin.io/b/5f439005514ec5112d0d144b",
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Data == Number(window.rok)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table').append(trHTML);}
+            });
+        }
+    });
+}
+)
+}
+if (feature.properties.rok_2 != null){
+layer.bindPopup('<h2>'
++feature.properties.nazwa+' <img src="'+feature.properties.odnosnik+'" height=20px width=35px style="border:1.6px solid black; vertical-align: text-bottom;"></h2><h3>Rok: '+feature.properties.rok+'</h3><h3 id="zlote"><em>Złote: </em>'+feature.properties.zlote+'</h3><h3 id="srebrne"><em>Srebrne: </em>'
++feature.properties.srebrne+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.brazowe+'</h3><hr><h3>Rok: '+feature.properties.rok_2+'</h3><h3 id="zlote"><em>Złote: </em>'+
+feature.properties.zlote_2+'</h3><h3 id="srebrne"><em>Srebrne: </em>'
++feature.properties.srebrne_2+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.brazowe_2+'</h3>') 
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+layer.on('click',function(e){
+    window.rok = feature.properties.rok;
+    window.zloto = feature.properties.zlote;
+    window.srebro = feature.properties.srebrne;
+    window.braz = feature.properties.brazowe;
+    window.rok2 = feature.properties.rok_2;
+    window.zloto2 = feature.properties.zlote_2;
+    window.srebro2 = feature.properties.srebrne_2;
+    window.braz2 = feature.properties.brazowe_2;
+    document.getElementById("desc").innerHTML = '<h4>Polacy w '+window.rok+' roku</h4>';
+    document.getElementById("div_desc").innerHTML = '<h4>Igrzyska olimpijskie w '+window.rok+' roku</h4>';
+    document.getElementById("gold").innerHTML = window.zloto;
+    document.getElementById("silver").innerHTML = window.srebro;
+    document.getElementById("bronze").innerHTML = window.braz;
+    document.getElementById("desc2").innerHTML = '<h4>Polacy w '+window.rok2+' roku</h4>';
+    document.getElementById("gold2").innerHTML = window.zloto2;
+    document.getElementById("silver2").innerHTML = window.srebro2;
+    document.getElementById("bronze2").innerHTML = window.braz2;
+    document.getElementById('spodek2').style.display='block';
+    document.getElementById('spodek').style.left = '32.5%';
+    document.getElementById('spodek2').style.left = '52.5%';
+    $('#records_table').remove();
+    $('#records_table2').remove();
+    $('#records_table3').remove();
+    $('#case2').remove();
+    $('#case3').remove();
+    var html = "<table id='records_table' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html);
+    $.ajax({
+        url: "https://api.jsonbin.io/b/5f439005514ec5112d0d144b",
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table').append(trHTML);}
+            });
+        }
+    });
+    var case2 = '<h4 id="case2">Igrzyska olimpijskie w '+window.rok2+' roku</h4>'
+    $("#block").append(case2);
+    var html2 = "<table id='records_table2' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html2);
+    $.ajax({
+        url: "https://api.jsonbin.io/b/5f439005514ec5112d0d144b",
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok2)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table2').append(trHTML);}
+            });
+        }
+    });
+}
+)
+}
+}
+,pointToLayer: function(feature, latlng){return L.marker(latlng,{icon:zimowe_ikona});}});       
+zimowe.addTo(map);
+
+window.rok = 1924;
+window.zloto = "default";
+window.srebro = "default";
+window.braz = "default"
+
+var letnie = new L.GeoJSON.AJAX("https://api.jsonbin.io/b/5ebbb922a47fdd6af162764a/5",{onEachFeature:function (feature,layer) {
+if (feature.properties.rok2 == null){
+layer.bindPopup('<h2>'+
+feature.properties.Miejsce+' <img src="'+feature.properties.odnosnik+'"height=20px width=35px style="border:1.6px solid black; vertical-align: text-bottom;"></h2><h3>Rok: '+feature.properties.Rok+'</h3><h3 id="zlote"><em>Złote: </em>'+feature.properties.gold+'</h3><h3 id="srebrne"><em>Srebrne: </em>'+feature.properties.silver+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.bronze+'</h3>')
+layer.on('click',function(e){
+    window.rok = feature.properties.Rok;
+    window.zloto = feature.properties.gold;
+    window.srebro = feature.properties.silver;
+    window.braz = feature.properties.bronze;
+    document.getElementById("desc").innerHTML = '<h4>Polacy w '+window.rok+' roku</h4>';
+    document.getElementById("div_desc").innerHTML = '<h4>Igrzyska olimpijskie w '+window.rok+' roku</h4>';
+    document.getElementById("gold").innerHTML = window.zloto;
+    document.getElementById("silver").innerHTML = window.srebro;
+    document.getElementById("bronze").innerHTML = window.braz;
+    document.getElementById('spodek2').style.display='none';
+    document.getElementById('spodek').style.left = '42.5%';
+    $('#records_table').remove();
+    $('#records_table2').remove();
+    $('#records_table3').remove();
+    $('#case2').remove();
+    $('#case3').remove();
+    var html = "<table id='records_table' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table').append(trHTML);}
+            });
+        }
+    });
+});
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});}
+if (feature.properties.rok2 != null){
+layer.bindPopup('<h2>'+
+feature.properties.Miejsce+' <img src="'+feature.properties.odnosnik+'" height=20px width=35px style="border:1.6px solid black; vertical-align: text-bottom;"></h2><h3>Rok: '+feature.properties.Rok+'</h3><h3 id="zlote"><em>Złote: </em>'+feature.properties.gold+'</h3><h3 id="srebrne"><em>Srebrne: </em>'+feature.properties.silver+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.bronze+'</h3><hr><h3>Rok: '+feature.properties.rok2+'</h3><h3 id="zlote"><em>Złote: </em>'+
+feature.properties.gold2+'</h3><h3 id="srebrne"><em>Srebrne: </em>'
++feature.properties.silver2+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.bronze2+'</h3>')
+layer.on('click',function(e){
+    window.rok = feature.properties.Rok;
+    window.zloto = feature.properties.gold;
+    window.srebro = feature.properties.silver;
+    window.braz = feature.properties.bronze;
+    window.rok2 = feature.properties.rok2;
+    window.zloto2 = feature.properties.gold2;
+    window.srebro2 = feature.properties.silver2;
+    window.braz2 = feature.properties.bronze2;
+    document.getElementById("desc").innerHTML = '<h4>Polacy w '+window.rok+' roku</h4>';
+    document.getElementById("div_desc").innerHTML = '<h4>Igrzyska olimpijskie w '+window.rok+' roku</h4>';
+    document.getElementById("gold").innerHTML = window.zloto;
+    document.getElementById("silver").innerHTML = window.srebro;
+    document.getElementById("bronze").innerHTML = window.braz;
+    document.getElementById("desc2").innerHTML = '<h4>Polacy w '+window.rok2+' roku</h4>';
+    document.getElementById("gold2").innerHTML = window.zloto2;
+    document.getElementById("silver2").innerHTML = window.srebro2;
+    document.getElementById("bronze2").innerHTML = window.braz2;
+    document.getElementById('spodek2').style.display='block';
+    document.getElementById('spodek').style.left = '32.5%';
+    document.getElementById('spodek2').style.left = '52.5%';
+    $('#records_table').remove();
+    $('#records_table2').remove();
+    $('#case2').remove();
+    $('#records_table3').remove();
+    $('#case3').remove();
+    var html = "<table id='records_table' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table').append(trHTML);}
+            });
+        }
+    });
+    var case2 = '<h4 id="case2">Igrzyska olimpijskie w '+window.rok2+' roku</h4>'
+    $("#block").append(case2);
+    var html2 = "<table id='records_table2' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html2);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok2)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table2').append(trHTML);
+                }
+            });
+        }
+    });
+});
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+}
+if (feature.properties.rok3 != null){
+layer.bindPopup('<h2>'+
+feature.properties.Miejsce+' <img src="'+feature.properties.odnosnik+'" height=20px width=35px style="border:1.6px solid black; vertical-align: text-bottom;"></h2><h3>Rok: '+feature.properties.Rok+'</h3><h3 id="zlote"><em>Złote: </em>'+feature.properties.gold+'</h3><h3 id="srebrne"><em>Srebrne: </em>'+feature.properties.silver+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.bronze+'</h3><hr><h3>Rok: '+feature.properties.rok2+'</h3><h3 id="zlote"><em>Złote: </em>'+
+feature.properties.gold2+'</h3><h3 id="srebrne"><em>Srebrne: </em>'
++feature.properties.silver2+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.bronze2+'</h3><hr><h3>Rok: '+ feature.properties.rok3+'</h3><h3 id="zlote"><em>Złote: </em>'+
+feature.properties.gold3+'</h3><h3 id="srebrne"><em>Srebrne: </em>'
++feature.properties.silver3+
+'</h3><h3 id="brazowe"><em>Brązowe: </em>'+feature.properties.bronze3+'</h3>')
+layer.on('mouseover', function (e) {
+    this.openPopup();
+});
+layer.on('mouseout', function (e) {
+    this.closePopup();
+});
+layer.on('click',function(e){
+    window.rok = feature.properties.Rok;
+    window.zloto = feature.properties.gold;
+    window.srebro = feature.properties.silver;
+    window.braz = feature.properties.bronze;
+    window.rok2 = feature.properties.rok2;
+    window.zloto2 = feature.properties.gold2;
+    window.srebro2 = feature.properties.silver2;
+    window.braz2 = feature.properties.bronze2;
+    window.rok3 = feature.properties.rok3;
+    window.zloto3 = feature.properties.gold3;
+    window.srebro3 = feature.properties.silver3;
+    window.braz3 = feature.properties.bronze3;
+    document.getElementById("desc").innerHTML = '<h4>Polacy w '+window.rok+' roku</h4>';
+    document.getElementById("div_desc").innerHTML = '<h4>Igrzyska olimpijskie w '+window.rok+' roku</h4>';
+    document.getElementById("gold").innerHTML = window.zloto;
+    document.getElementById("silver").innerHTML = window.srebro;
+    document.getElementById("bronze").innerHTML = window.braz;
+    document.getElementById("desc2").innerHTML = '<h4>Polacy w '+window.rok2+' roku</h4>';
+    document.getElementById("gold2").innerHTML = window.zloto2;
+    document.getElementById("silver2").innerHTML = window.srebro2;
+    document.getElementById("bronze2").innerHTML = window.braz2;
+    document.getElementById('spodek2').style.display='block';
+    document.getElementById('spodek').style.left = '24%';
+    document.getElementById('spodek2').style.left = '42.5%';
+    document.getElementById('spodek3').style.left = '61%';
+    document.getElementById('spodek3').style.display='block';
+    document.getElementById("desc3").innerHTML = '<h4>Polacy w '+window.rok3+' roku</h4>';
+    document.getElementById("gold3").innerHTML = window.zloto3;
+    document.getElementById("silver3").innerHTML = window.srebro3;
+    document.getElementById("bronze3").innerHTML = window.braz3;
+    $('#records_table').remove();
+    $('#records_table2').remove();
+    $('#records_table3').remove();
+    $('#case2').remove();
+    $('#case3').remove();
+    var html = "<table id='records_table' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table').append(trHTML);}
+            });
+        }
+    });
+    var case2 = '<h4 id="case2">Igrzyska olimpijskie w '+window.rok2+' roku</h4>'
+    $("#block").append(case2);
+    var html2 = "<table id='records_table2' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html2);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok2)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    //$('#records_table2').append(trHTML);
+                }
+            });
+        }
+    });
+    var case3 = '<h4 id="case3">Igrzyska olimpijskie w '+window.rok3+' roku</h4>'
+    $("#block").append(case3);
+    var html3 = "<table id='records_table3' border='1'><tr><th>Zawodnik</th><th>Dyscyplina</th><th>Medal</th></tr></table>";
+    $("#block").append(html3);
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $.each(response, function (i, item) {
+                if (item.Rok == Number(window.rok3)){
+                    var trHTML = '';
+                    trHTML += '<tr><td>' + item.Zawodnik + '</td><td>' + item.Dyscyplina + '</td><td>' + item.Medal + '</td></tr>';
+                    $('#records_table3').append(trHTML);}
+            });
+        }
+    });
+});
+}
+}
+,pointToLayer: function(feature, latlng){return L.marker(latlng,{icon:letnie_ikona});}});       
+letnie.addTo(map);
+
+zimowe.on('click', function(e){
+    map.setView(e.latlng, 5);
+});
+
+map.on('click', function(){
+    map.setView([20,0], 2);
+});
+
+letnie.on('click',function(e){
+    map.setView(e.latlng,5);
+});
+
+var zimowe_button = document.getElementById("zimowe_button");
+zimowe_button.addEventListener("click", function(){
+    map.removeLayer(letnie);
+    zimowe.addTo(map);
+})
+
+var letnie_button = document.getElementById("letnie_button");
+letnie_button.addEventListener("click", function(){
+    map.removeLayer(zimowe);
+    letnie.addTo(map);
+})
+
+var olimpijskie_button = document.getElementById("olimpijskie_button");
+olimpijskie_button.addEventListener("click", function(){
+    zimowe.addTo(map);
+    letnie.addTo(map);
+})
+
+letnie.on('click',function(){
+    document.getElementById('block').style.display='block';
+});
+
+letnie.on('click',function(){
+    document.getElementById('spodek').style.display='block';
+});
+
+zimowe.on('click',function(){
+    document.getElementById('block').style.display='block';
+});
+
+zimowe.on('click',function(){
+    document.getElementById('spodek').style.display='block';
+});
+
+
+$('.selected-icon').on('click', function(){
+    $('.selected-icon').removeClass('selected');
+    $(this).addClass('selected');
+});
+
+var url = "https://api.jsonbin.io/b/5f633d0065b18913fc4dcad6/1"
+
+map.zoomControl.setPosition('topright');
+
+</script>
+</body>
+</html>
